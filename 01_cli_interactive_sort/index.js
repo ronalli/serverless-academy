@@ -15,7 +15,7 @@ const rl = readLine.createInterface({ input, output });
 
 const run = () => {
   rl.question(
-    'Hello. Enter 10 words or digits deviding them in spaces: ',
+    '\nHello. Enter 10 words or digits deviding them in spaces: ',
     (input) => {
       const array = input.split(' ');
       console.log('\nHow would you like to sort values:');
@@ -23,8 +23,7 @@ const run = () => {
         console.log(`${index + 1}. ${item}`);
       });
       rl.question('\nSelect (1-6) and press Enter: ', (index) => {
-        let num = index;
-        switch (num) {
+        switch (index) {
           case '1': {
             console.log(sortWordsAlpha(array));
             break;

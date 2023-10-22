@@ -7,6 +7,7 @@ const helpFunction = (array, flag) => {
       item.match(/^[-+]?(?:(?:0|[1-9]\d*)(?:[.]\d+)?|[1-9]\d*)$/g)
     );
   }
+  return array;
 };
 
 export const sortWordsToLenght = (array) => {
