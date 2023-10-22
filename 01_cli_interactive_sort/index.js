@@ -8,7 +8,7 @@ const typeSort = [
   'Display words in ascending order by number of letters in the word',
   'Show only unique words',
   'Display only unique values from the set of words and numbers entered by the user',
-  'Exit',
+  'Write word "exit"',
 ];
 
 const helpFunction = (array, flag) => {
@@ -20,49 +20,83 @@ const helpFunction = (array, flag) => {
   }
 };
 
-const sortWordsAlpha = (array) => {
-  const arr = helpFunction(array, 'word');
+const sortWordsToLenght = (array) => {
+  return helpFunction(array, 'word').sort((a, b) => {
+    if (a.length > b.length) return 1;
+    if (a.length < b.length) return -1;
+    return 0;
+  });
 };
 
-const sortNumbers = (array) => {
+const uniqueSet = (array) => {
+  return [...new Set(array)];
+};
+
+const uniqueWordsSet = (array) => {
+  return uniqueSet(helpFunction(array, 'word'));
+};
+
+const sortWordsAlpha = (array) => {
+  const arr = helpFunction(array, 'word');
+  return arr.sort((a, b) => {
+    if (a.toLowerCase() > b.toLowerCase()) return 1;
+    if (a.toLowerCase() < b.toLowerCase()) return -1;
+    return 0;
+  });
+};
+
+const sortNumbers = (array, flag) => {
   const arr = helpFunction(array, 'number');
-  console.log(arr);
+  if (flag === 'ltg') return arr.sort((a, b) => a - b);
+  if (flag === 'bts') return arr.sort((a, b) => b - a);
+  return array;
 };
 
 const rl = readLine.createInterface({ input, output });
 
-rl.question('Hello. Please 10 words or digitls: ', (input) => {
-  const array = input.split(' ');
-  console.log('How would you like to sort values:');
-  typeSort.forEach((item, index) => {
-    console.log(`${index + 1}. ${item}`);
+const run = () => {
+  rl.question('Hello. Please 10 words or digitls: ', (input) => {
+    const array = input.split(' ');
+    console.log('How would you like to sort values:');
+    typeSort.forEach((item, index) => {
+      console.log(`${index + 1}. ${item}`);
+    });
+    rl.question('Select (1-6) and press Enter: ', (index) => {
+      let num = index;
+      switch (num) {
+        case '1': {
+          console.log(sortWordsAlpha(array));
+          break;
+        }
+        case '2': {
+          console.log(sortNumbers(array, 'ltg'));
+          break;
+        }
+        case '3': {
+          console.log(sortNumbers(array, 'bts'));
+          break;
+        }
+        case '4': {
+          console.log(sortWordsToLenght(array));
+          break;
+        }
+        case '5': {
+          console.log(uniqueWordsSet(array));
+          break;
+        }
+        case '6': {
+          console.log(uniqueSet(array));
+          break;
+        }
+        case '7':
+        case 'exit':
+        default: {
+          return rl.close();
+        }
+      }
+      run();
+    });
   });
-  rl.question('Select (1-6) and press Enter:', (index) => {
-    let num = index;
-    switch (num) {
-      case '1': {
-        sortWordsAlpha(array);
-        break;
-      }
-      case '2': {
-        sortNumbers(array);
-        break;
-      }
-      case '3': {
-        break;
-      }
-      case '4': {
-        break;
-      }
-      case '5': {
-        break;
-      }
-      case '6': {
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  });
-});
+};
+
+run();
