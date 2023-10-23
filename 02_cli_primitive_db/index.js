@@ -7,19 +7,33 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+const helpFunction = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'searchUser',
+        message: 'Would you like to search values in BD?',
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const questions = [
   {
     type: 'input',
     name: 'userName',
     message: "Enter user's name. To cancel press ENTER: ",
-    validate: (answers) => {
-      console.log('fsddf', answers);
-      return true;
-    },
+    // validate: helpFunction,
   },
   {
     type: 'list',
-    name: 'gander',
+    name: 'gender',
     message: 'Choose your Gender: ',
     choices: ['male', 'female'],
   },
@@ -36,10 +50,9 @@ const questions = [
   },
 ];
 
-
 const run = () => {
-  inquirer
-    .prompt(questions)
+  const promt = inquirer.prompt(questions);
+  promt
     .then((answers) => {
       fs.access('db.txt', constants.F_OK, (err) => {
         if (err) {
@@ -54,10 +67,18 @@ const run = () => {
       });
       run();
     })
-    .catch(() => {
-      console.log('fds');
+    .catch((err) => {
+      // if (err === 'Press enter')
+      console.log(err);
+      // helpFunction();
     });
+
+  process.stdin.on('keypress', (_, key) => {
+    if (key.name === 'return') {
+      promt.ui.close();
+      helpFunction();
+    }
+  });
 };
 
 run();
-
