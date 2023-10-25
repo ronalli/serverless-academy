@@ -1,0 +1,11 @@
+{
+  "name": "03_cli_telegram_commander",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "node-telegram-bot-api": "^0.63.0"
+  }
+}
