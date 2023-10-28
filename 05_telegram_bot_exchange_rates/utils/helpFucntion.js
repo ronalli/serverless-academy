@@ -1,3 +1,4 @@
+import { code } from './codeCurrency.js';
 import { weather } from './icon.js';
 
 export const dataProcessing = (obj) => {
@@ -19,11 +20,26 @@ export const printHTML = (item) => {
   return `Date: ${item['date']}, temperature: ${item['temp']}, weather: ${item['weather']}, speed wind: ${item['speed_wind']}`;
 };
 
+export const getMono = () => {};
 
-export const getMono = () => {
+export const getPrivat = () => {};
 
-}
+export const formatCurrencyMono = (arr) => {
+  const obj = {};
+  for (const item of arr) {
+    obj[code[item.currencyCodeA]] = `Currency: ${
+      code[item.currencyCodeA]
+    }, buy: ${item.rateBuy}, sale: ${item.rateSell}`;
+  }
+  return obj;
+};
 
-export const getPrivat = () => {
-	
-}
+export const formatCurrencyPrivat = (arr) => {
+  const obj = {};
+  for (const item of arr) {
+    obj[
+      item.ccy
+    ] = `Currency: ${item.ccy}, buy: ${item.buy}, sale: ${item.sale}`;
+  }
+  return obj;
+};
