@@ -30,12 +30,7 @@ export const getExchangeRatesAll = async () => {
   }
 };
 
-export const getExchangeRatesUSD = async (key = 'USD') => {
+export const getExchangeRates = async (key) => {
   const data = await getExchangeRatesAll();
-};
-
-export const getExchangeRatesEUR = async (key = 'EUR') => {
-  const data = await getExchangeRatesAll();
-  // return data;
-  console.log(data);
+  return data.map((item) => item.get(key));
 };

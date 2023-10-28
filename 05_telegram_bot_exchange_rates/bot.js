@@ -8,11 +8,7 @@ import {
   intervalKeyboard,
   exchangeKeyboard,
 } from './utils/keyboards.js';
-import {
-  getExchangeRatesEUR,
-  getRatesMono,
-  getRatesPrivat,
-} from './api/apiExchange.js';
+import { getExchangeRates } from './api/apiExchange.js';
 
 const TOKEN = process.env.API_TOKEN || '';
 
@@ -68,13 +64,14 @@ bot.on('text', async (msg) => {
       },
     });
   } else if (msg.text === 'USD') {
-    const { data } = await getRatesPrivat();
-    // console.log(d);
-    await bot.sendMessage(msg.chat.id, JSON.stringify(data));
+    const data = await getExchangeRates(msg.text);
+    for (const item of data) {
+      await bot.sendMessage(msg.chat.id, item, { parse_mode: 'HTML' });
+    }
   } else if (msg.text === 'EUR') {
-    // const { data } = await getRatesMono();
-    // console.log(data.slice(0, 2));
-    getExchangeRatesEUR();
-    // await bot.sendMessage(msg.chat.id, JSON.stringify(data));
+    const data = await getExchangeRates(msg.text);
+    for (const item of data) {
+      await bot.sendMessage(msg.chat.id, item, { parse_mode: 'HTML' });
+    }
   }
 });

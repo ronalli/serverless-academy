@@ -8,3 +8,8 @@ export const weather = {
   mist: '🌫',
   snow: '❄️',
 };
+
+export const currency = {
+  USD: '💵',
+  EUR: '💶',
+};
