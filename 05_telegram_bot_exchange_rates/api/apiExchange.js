@@ -4,6 +4,8 @@ import {
   formatCurrencyPrivat,
 } from '../utils/helpFucntion.js';
 
+import myCache from '../utils/cache.js';
+
 const URL_MONO = 'https://api.monobank.ua/bank/currency';
 const URL_PRIVAT =
   'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5';
@@ -15,13 +17,25 @@ export const getRatesMono = async () => {
 
 export const getRatesPrivat = async () => {
   const response = await axios.get(URL_PRIVAT);
-
   return formatCurrencyPrivat(response.data);
 };
 
-export const getExchangeRatesUSD = () => {};
+export const getExchangeRatesAll = async () => {
+  if (myCache.get('currency')) {
+    return myCache.get('currency');
+  } else {
+    const data = await axios.all([getRatesMono(), getRatesPrivat()]);
+    myCache.set('currency', data);
+    return data;
+  }
+};
 
-export const getExchangeRatesEUR = async () => {
-  const data = await axios.all([getRatesMono(), getRatesPrivat()]);
+export const getExchangeRatesUSD = async (key = 'USD') => {
+  const data = await getExchangeRatesAll();
+};
+
+export const getExchangeRatesEUR = async (key = 'EUR') => {
+  const data = await getExchangeRatesAll();
+  // return data;
   console.log(data);
 };

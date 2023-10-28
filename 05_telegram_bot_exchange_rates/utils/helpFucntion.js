@@ -25,21 +25,31 @@ export const getMono = () => {};
 export const getPrivat = () => {};
 
 export const formatCurrencyMono = (arr) => {
-  const obj = {};
+  const obj = new Map();
   for (const item of arr) {
-    obj[code[item.currencyCodeA]] = `Currency: ${
-      code[item.currencyCodeA]
-    }, buy: ${item.rateBuy}, sale: ${item.rateSell}`;
+    obj.set(
+      code[item.currencyCodeA],
+      `Bank: Monobank, Currency: ${code[item.currencyCodeA]}, buy: ${
+        item.rateBuy
+      }, sale: ${item.rateSell}`
+    );
+    // obj[code[item.currencyCodeA]] = `Bank: Monobank, Currency: ${
+    //   code[item.currencyCodeA]
+    // }, buy: ${item.rateBuy}, sale: ${item.rateSell}`;
   }
   return obj;
 };
 
 export const formatCurrencyPrivat = (arr) => {
-  const obj = {};
+  const obj = new Map();
   for (const item of arr) {
-    obj[
-      item.ccy
-    ] = `Currency: ${item.ccy}, buy: ${item.buy}, sale: ${item.sale}`;
+    obj.set(
+      item.ccy,
+      `Bank: Privatbank, Currency: ${item.ccy}, buy: ${item.buy}, sale: ${item.sale}`
+    );
+    // obj[
+    //   item.ccy
+    // ] = `Bank: Monobank, Currency: ${item.ccy}, buy: ${item.buy}, sale: ${item.sale}`;
   }
   return obj;
 };
