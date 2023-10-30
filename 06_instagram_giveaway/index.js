@@ -1,25 +1,13 @@
 import fs from 'fs';
 import readLine from 'readline';
+import {
+  uniqueValues,
+  existInAllFiles,
+  existInAtleastTen,
+} from './utils/index.js';
 
-// const readerStream = fs.createReadStream()
-
-const arr = [];
-
-// const set = new Set();
-
-// const readTextFile = (pathFile, i) => {
-//   const stream = fs.createReadStream(pathFile, { encoding: 'utf-8' });
-//   stream.on('data', (chunk) => {
-//     const data = chunk.split('\n');
-//     data.forEach((element) => {
-//       set.add(element);
-//     });
-//   });
-//   stream.on('end', () => {
-//     arr.push(set);
-//     console.log(arr.length);
-//   });
-// };
+const array = [];
+const allNames = new Set();
 
 const readTextFile = (pathFile) => {
   const set = new Set();
@@ -27,7 +15,6 @@ const readTextFile = (pathFile) => {
     const rl = readLine.createInterface({
       input: fs.createReadStream(pathFile, { encoding: 'utf-8' }),
     });
-
     rl.on('line', (line) => {
       set.add(line);
     });
@@ -38,19 +25,18 @@ const readTextFile = (pathFile) => {
   });
 };
 
-const run = async () => {
-  try {
-    for (let i = 0; i < 19; i++) {
-      const data = await readTextFile(`./files/out${i}.txt`, i);
-      arr.push(data);
-    }
-  } catch (error) {
-    console.log(error);
-  }
+const startTime = new Date().getTime();
+for (let i = 0; i < 20; i++) {
+  const data = await readTextFile(`./files/out${i}.txt`, i);
+  array.push(data);
+}
 
-  console.log(arr.length);
-};
+const uniqueNames = uniqueValues(array, allNames);
+const existtNamesAllFiles = existInAllFiles(array, allNames);
+const existNamesTenFiles = existInAtleastTen(array, allNames);
 
-run();
+const endTime = new Date().getTime();
 
-// console.log(arr.length);
+console.log(uniqueNames, existtNamesAllFiles, existNamesTenFiles);
+
+console.log(`${endTime - startTime} seconds`);
