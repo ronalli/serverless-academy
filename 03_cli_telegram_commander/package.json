@@ -7,5 +7,9 @@
   "dependencies": {
     "commander": "^11.1.0",
     "node-telegram-bot-api": "^0.63.0"
+  },
+	"scripts": {
+    "start:dotenv": "export env $(cat .env | xargs) node bot.js",
+    "start": "node bot.js"
   }
 }

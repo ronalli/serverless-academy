@@ -8,5 +8,9 @@
     "axios": "^1.6.0",
     "node-cache": "^5.1.2",
     "node-telegram-bot-api": "^0.64.0"
+  },
+  "scripts": {
+    "start:dotenv": "export env $(cat .env | xargs) node bot.js",
+    "start": "node bot.js"
   }
 }
